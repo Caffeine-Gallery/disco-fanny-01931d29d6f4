@@ -1,0 +1,111 @@
+body {
+    background-color: #1a1a1a;
+    color: white;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.disco-lights {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 50% 50%, rgba(255,0,0,0.2) 0%, transparent 20%),
+        radial-gradient(circle at 20% 20%, rgba(0,255,0,0.2) 0%, transparent 20%),
+        radial-gradient(circle at 80% 80%, rgba(0,0,255,0.2) 0%, transparent 20%);
+    animation: disco 5s infinite linear;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes disco {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.container {
+    position: relative;
+    z-index: 1;
+}
+
+.disco-title {
+    font-size: 4rem;
+    font-weight: bold;
+    color: #ff69b4;
+    text-shadow: 0 0 10px rgba(255,105,180,0.7);
+    animation: glow 2s infinite alternate;
+}
+
+.birthday-subtitle {
+    font-size: 2.5rem;
+    color: #00ffff;
+    text-shadow: 0 0 8px rgba(0,255,255,0.7);
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 10px rgba(255,105,180,0.7);
+    }
+    to {
+        text-shadow: 0 0 20px rgba(255,105,180,0.9),
+                     0 0 30px rgba(255,105,180,0.7);
+    }
+}
+
+.registration-card {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    border: none;
+    border-radius: 15px;
+}
+
+.card {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    border: none;
+    border-radius: 15px;
+    color: white;
+}
+
+.btn-primary {
+    background-color: #ff69b4;
+    border-color: #ff69b4;
+    font-weight: bold;
+}
+
+.btn-primary:hover {
+    background-color: #ff1493;
+    border-color: #ff1493;
+}
+
+.guest-list {
+    min-height: 100px;
+}
+
+.guest-item {
+    padding: 10px;
+    margin: 5px 0;
+    background: rgba(255,255,255,0.05);
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.guest-status {
+    font-size: 0.9em;
+    padding: 3px 8px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.1);
+}
+
+.attending {
+    color: #00ff00;
+}
+
+.not-attending {
+    color: #ff4444;
+}

@@ -1,0 +1,9 @@
+type Guest = 
+ record {
+   attending: bool;
+   name: text;
+ };
+service : {
+  addGuest: (text, bool) -> (bool);
+  getGuests: () -> (vec Guest) query;
+}
