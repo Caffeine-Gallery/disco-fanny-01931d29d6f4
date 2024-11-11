@@ -6,6 +6,51 @@ body {
     overflow-x: hidden;
 }
 
+.disco-ball {
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle at 50% 50%, #fff, #666);
+    border-radius: 50%;
+    position: fixed;
+    box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
+    animation: spin 5s linear infinite;
+    z-index: 0;
+}
+
+.disco-ball::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 5px, rgba(255,255,255,0.2) 5px, rgba(255,255,255,0.2) 10px);
+    border-radius: 50%;
+    animation: sparkle 1s linear infinite;
+}
+
+.disco-ball:nth-child(1) {
+    top: 50px;
+    left: 10%;
+}
+
+.disco-ball:nth-child(2) {
+    top: 100px;
+    right: 10%;
+    animation-delay: -2.5s;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes sparkle {
+    0% { opacity: 0.5; }
+    50% { opacity: 1; }
+    100% { opacity: 0.5; }
+}
+
 .disco-lights {
     position: fixed;
     top: 0;
@@ -108,4 +153,10 @@ body {
 
 .not-attending {
     color: #ff4444;
+}
+
+.error-message {
+    color: #ff4444;
+    margin-top: 10px;
+    text-align: center;
 }

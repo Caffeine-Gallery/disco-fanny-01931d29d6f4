@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const nameInput = document.getElementById('guestName');
         const attendingInput = document.getElementById('attending');
+        const errorMessage = document.getElementById('errorMessage');
         
         const name = nameInput.value.trim();
         const attending = attendingInput.checked;
@@ -17,14 +18,25 @@ document.addEventListener('DOMContentLoaded', () => {
             const submitButton = e.target.querySelector('button');
             submitButton.disabled = true;
             submitButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Saving...';
+            errorMessage.style.display = 'none';
 
             try {
-                await backend.addGuest(name, attending);
-                nameInput.value = '';
-                await loadGuests();
+                const result = await backend.addGuest(name, attending);
+                
+                switch (result.tag) {
+                    case 'ok':
+                        nameInput.value = '';
+                        await loadGuests();
+                        break;
+                    case 'err':
+                        errorMessage.textContent = result._0;
+                        errorMessage.style.display = 'block';
+                        break;
+                }
             } catch (error) {
                 console.error('Error adding guest:', error);
-                alert('Failed to add guest. Please try again.');
+                errorMessage.textContent = 'Failed to add guest. Please try again.';
+                errorMessage.style.display = 'block';
             } finally {
                 submitButton.disabled = false;
                 submitButton.innerHTML = "Let's Disco! 🕺";

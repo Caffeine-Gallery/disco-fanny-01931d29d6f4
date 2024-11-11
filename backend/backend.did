@@ -1,9 +1,14 @@
+type Result = 
+ variant {
+   err: text;
+   ok: text;
+ };
 type Guest = 
  record {
    attending: bool;
    name: text;
  };
 service : {
-  addGuest: (text, bool) -> (bool);
+  addGuest: (text, bool) -> (Result);
   getGuests: () -> (vec Guest) query;
 }
