@@ -8,47 +8,54 @@
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <div class="disco-ball"></div>
-    <div class="disco-ball"></div>
     <div class="disco-lights"></div>
+    <div class="disco-ball-wrapper">
+        <div class="disco-ball">
+            <div class="disco-ball-light"></div>
+        </div>
+    </div>
+    <div class="neon-grid"></div>
     
     <div class="container py-5">
         <div class="text-center mb-3">
-            <button id="connectWalletBtn" class="btn btn-outline-light mb-4">
-                <span class="wallet-text">Connect Wallet</span>
+            <button id="connectPlugBtn" class="btn btn-neon mb-4">
+                <span class="wallet-text">Connect Plug Wallet</span>
+                <img src="https://plugwallet.ooo/assets/images/plug-logo.svg" alt="Plug" class="plug-icon">
             </button>
             <div id="connectedStatus" class="connected-status" style="display: none;">
-                Connected: <span id="principalId" class="principal-id"></span>
+                <span class="neon-text">Connected:</span> 
+                <span id="principalId" class="principal-id"></span>
             </div>
         </div>
 
         <div class="text-center mb-5">
             <h1 class="disco-title">Disco Fanny's</h1>
             <h2 class="birthday-subtitle">Birthday Bash! 🎉</h2>
+            <div class="retro-line"></div>
         </div>
 
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card registration-card">
                     <div class="card-body">
-                        <h3 class="card-title text-center mb-4">RSVP Here!</h3>
+                        <h3 class="card-title text-center mb-4 neon-text">RSVP Here!</h3>
                         <form id="rsvpForm">
                             <div class="mb-3">
-                                <input type="text" class="form-control" id="guestName" placeholder="Your Name" required>
+                                <input type="text" class="form-control disco-input" id="guestName" placeholder="Your Name" required>
                             </div>
                             <div class="mb-3 form-check">
                                 <input type="checkbox" class="form-check-input" id="attending" checked>
-                                <label class="form-check-label" for="attending">I'll be there to boogie!</label>
+                                <label class="form-check-label neon-text" for="attending">I'll be there to boogie!</label>
                             </div>
                             <div id="errorMessage" class="error-message" style="display: none;"></div>
-                            <button type="submit" class="btn btn-primary w-100" disabled>Let's Disco! 🕺</button>
+                            <button type="submit" class="btn btn-neon w-100" disabled>Let's Disco! 🕺</button>
                         </form>
                     </div>
                 </div>
 
                 <div class="card mt-4">
                     <div class="card-body">
-                        <h3 class="card-title text-center mb-4">Guest List</h3>
+                        <h3 class="card-title text-center mb-4 neon-text">Guest List</h3>
                         <div id="guestList" class="guest-list">
                             <div class="text-center" id="loading">
                                 <div class="spinner-border text-primary" role="status">

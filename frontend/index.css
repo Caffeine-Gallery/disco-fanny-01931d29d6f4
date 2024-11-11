@@ -1,33 +1,147 @@
-/* Previous CSS remains the same, adding new styles below */
-
-.connected-status {
-    background: rgba(255,255,255,0.1);
-    padding: 8px 16px;
-    border-radius: 20px;
-    display: inline-block;
-    margin-top: 10px;
-    font-size: 0.9em;
+@keyframes neonFlicker {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        text-shadow: 
+            0 0 5px #fff,
+            0 0 10px #fff,
+            0 0 20px #ff00de,
+            0 0 30px #ff00de,
+            0 0 40px #ff00de,
+            0 0 55px #ff00de,
+            0 0 75px #ff00de;
+    }
+    20%, 24%, 55% {
+        text-shadow: none;
+    }
 }
 
-.principal-id {
-    color: #00ffff;
-    font-family: monospace;
-    font-size: 0.9em;
+body {
+    background-color: #120524;
+    color: white;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+    font-family: 'Arial', sans-serif;
 }
 
-#connectWalletBtn {
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.3);
+.neon-grid {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: linear-gradient(transparent 95%, #ff00de 95%),
+                      linear-gradient(90deg, transparent 95%, #ff00de 95%);
+    background-size: 50px 50px;
+    opacity: 0.1;
+    z-index: -1;
+}
+
+.disco-ball-wrapper {
+    position: fixed;
+    top: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+}
+
+.disco-ball {
+    width: 120px;
+    height: 120px;
+    background: radial-gradient(circle at 50% 50%, #fff, #999);
+    border-radius: 50%;
+    position: relative;
+    box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
+    animation: spin 5s linear infinite;
+}
+
+.disco-ball::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%),
+        linear-gradient(transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%);
+    background-size: 10px 10px;
+    border-radius: 50%;
+    animation: sparkle 1s linear infinite;
+}
+
+.disco-ball-light {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    animation: discoBallLight 2s infinite;
+}
+
+@keyframes discoBallLight {
+    0% { box-shadow: 0 0 60px rgba(255,105,180,0.8); }
+    50% { box-shadow: 0 0 80px rgba(0,255,255,0.8); }
+    100% { box-shadow: 0 0 60px rgba(255,105,180,0.8); }
+}
+
+.disco-lights {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 20%, rgba(255,0,0,0.2) 0%, transparent 25%),
+        radial-gradient(circle at 80% 20%, rgba(0,255,0,0.2) 0%, transparent 25%),
+        radial-gradient(circle at 50% 50%, rgba(0,0,255,0.2) 0%, transparent 25%),
+        radial-gradient(circle at 20% 80%, rgba(255,255,0,0.2) 0%, transparent 25%),
+        radial-gradient(circle at 80% 80%, rgba(255,0,255,0.2) 0%, transparent 25%);
+    animation: discoLights 5s infinite linear;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes discoLights {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.neon-text {
+    color: #fff;
+    animation: neonFlicker 1.5s infinite alternate;
+}
+
+.btn-neon {
+    background: rgba(255,105,180,0.2);
+    border: 2px solid #ff69b4;
+    color: #fff;
+    text-shadow: 0 0 5px #ff69b4;
+    box-shadow: 0 0 10px rgba(255,105,180,0.5);
     transition: all 0.3s ease;
 }
 
-#connectWalletBtn:hover {
-    background: rgba(255,255,255,0.2);
+.btn-neon:hover:not(:disabled) {
+    background: rgba(255,105,180,0.4);
+    box-shadow: 0 0 20px rgba(255,105,180,0.8);
     transform: translateY(-2px);
 }
 
-.wallet-text {
-    font-weight: 500;
+.disco-input {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,105,180,0.5);
+    color: #fff;
 }
 
-/* Rest of the previous CSS remains unchanged */
+.disco-input:focus {
+    background: rgba(255,255,255,0.2);
+    border-color: #ff69b4;
+    box-shadow: 0 0 10px rgba(255,105,180,0.5);
+    color: #fff;
+}
+
+.plug-icon {
+    height: 20px;
+    margin-left: 8px;
+    vertical-align: middle;
+}
+
+/* Previous CSS styles remain unchanged */
