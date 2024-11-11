@@ -1,10 +1,77 @@
 import { backend } from "declarations/backend";
+import { AuthClient } from "@dfinity/auth-client";
+import { Principal } from "@dfinity/principal";
 
-document.addEventListener('DOMContentLoaded', () => {
+let authClient;
+let principal = null;
+
+async function initAuth() {
+    authClient = await AuthClient.create();
+    const isAuthenticated = await authClient.isAuthenticated();
+
+    if (isAuthenticated) {
+        principal = authClient.getIdentity().getPrincipal();
+        updateAuthStatus(true);
+    } else {
+        updateAuthStatus(false);
+    }
+}
+
+async function connectWallet() {
+    try {
+        const connectBtn = document.getElementById('connectWalletBtn');
+        connectBtn.disabled = true;
+        connectBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Connecting...';
+
+        await authClient.login({
+            identityProvider: "https://identity.ic0.app/#authorize",
+            onSuccess: async () => {
+                principal = authClient.getIdentity().getPrincipal();
+                updateAuthStatus(true);
+                loadGuests();
+            },
+        });
+    } catch (error) {
+        console.error("Failed to connect wallet:", error);
+        updateAuthStatus(false);
+    }
+}
+
+function updateAuthStatus(isConnected) {
+    const connectBtn = document.getElementById('connectWalletBtn');
+    const connectedStatus = document.getElementById('connectedStatus');
+    const principalElement = document.getElementById('principalId');
+    const submitButton = document.querySelector('#rsvpForm button[type="submit"]');
+
+    connectBtn.disabled = false;
+    connectBtn.innerHTML = isConnected ? 'Wallet Connected' : 'Connect Wallet';
+
+    if (isConnected && principal) {
+        connectedStatus.style.display = 'block';
+        principalElement.textContent = principal.toText().slice(0, 10) + '...';
+        submitButton.disabled = false;
+    } else {
+        connectedStatus.style.display = 'none';
+        principalElement.textContent = '';
+        submitButton.disabled = true;
+    }
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+    await initAuth();
     loadGuests();
+
+    document.getElementById('connectWalletBtn').addEventListener('click', connectWallet);
 
     document.getElementById('rsvpForm').addEventListener('submit', async (e) => {
         e.preventDefault();
+        
+        if (!principal) {
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.textContent = 'Please connect your wallet first';
+            errorMessage.style.display = 'block';
+            return;
+        }
         
         const nameInput = document.getElementById('guestName');
         const attendingInput = document.getElementById('attending');
@@ -14,7 +81,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const attending = attendingInput.checked;
 
         if (name) {
-            // Disable form while submitting
             const submitButton = e.target.querySelector('button');
             submitButton.disabled = true;
             submitButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Saving...';
@@ -52,10 +118,7 @@ async function loadGuests() {
     try {
         const guests = await backend.getGuests();
         
-        // Hide loading spinner
         loadingElement.style.display = 'none';
-        
-        // Clear current list
         guestListElement.innerHTML = '';
         
         if (guests.length === 0) {
@@ -63,7 +126,6 @@ async function loadGuests() {
             return;
         }
 
-        // Add each guest to the list
         guests.forEach(guest => {
             const guestElement = document.createElement('div');
             guestElement.className = 'guest-item';

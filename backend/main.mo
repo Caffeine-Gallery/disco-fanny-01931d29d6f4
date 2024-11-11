@@ -5,46 +5,49 @@ import Array "mo:base/Array";
 import Text "mo:base/Text";
 import Buffer "mo:base/Buffer";
 import Result "mo:base/Result";
+import Principal "mo:base/Principal";
 
 actor {
-    // Define the Guest type
     public type Guest = {
         name: Text;
         attending: Bool;
+        principal: Principal;
     };
 
-    // Create a stable variable for guests
-    private stable var guestEntries : [(Text, Bool)] = [];
+    private stable var guestEntries : [(Text, Bool, Principal)] = [];
     private var guestBuffer = Buffer.Buffer<Guest>(0);
 
-    // System functions for upgrade persistence
     system func preupgrade() {
-        guestEntries := Array.map<Guest, (Text, Bool)>(
+        guestEntries := Array.map<Guest, (Text, Bool, Principal)>(
             Buffer.toArray(guestBuffer),
-            func(guest: Guest) : (Text, Bool) {
-                (guest.name, guest.attending)
+            func(guest: Guest) : (Text, Bool, Principal) {
+                (guest.name, guest.attending, guest.principal)
             }
         );
     };
 
     system func postupgrade() {
         guestBuffer := Buffer.Buffer<Guest>(0);
-        for ((name, attending) in guestEntries.vals()) {
-            guestBuffer.add({ name = name; attending = attending; });
+        for ((name, attending, principal) in guestEntries.vals()) {
+            guestBuffer.add({ name; attending; principal; });
         };
         guestEntries := [];
     };
 
-    // Add a new guest
-    public shared func addGuest(name: Text, attending: Bool) : async Result.Result<Text, Text> {
+    public shared(msg) func addGuest(name: Text, attending: Bool) : async Result.Result<Text, Text> {
         if (Text.size(name) == 0) {
             return #err("Name cannot be empty");
+        };
+
+        if (Principal.isAnonymous(msg.caller)) {
+            return #err("Please connect your wallet first");
         };
 
         try {
             let newGuest : Guest = {
                 name = name;
                 attending = attending;
+                principal = msg.caller;
             };
             
             guestBuffer.add(newGuest);
@@ -54,8 +57,11 @@ actor {
         }
     };
 
-    // Get all guests
     public query func getGuests() : async [Guest] {
         Buffer.toArray(guestBuffer)
+    };
+
+    public query func isAuthenticated(p : Principal) : async Bool {
+        not Principal.isAnonymous(p)
     };
 }

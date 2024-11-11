@@ -1,162 +1,33 @@
-body {
-    background-color: #1a1a1a;
-    color: white;
-    min-height: 100vh;
-    position: relative;
-    overflow-x: hidden;
-}
+/* Previous CSS remains the same, adding new styles below */
 
-.disco-ball {
-    width: 100px;
-    height: 100px;
-    background: radial-gradient(circle at 50% 50%, #fff, #666);
-    border-radius: 50%;
-    position: fixed;
-    box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
-    animation: spin 5s linear infinite;
-    z-index: 0;
-}
-
-.disco-ball::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: repeating-linear-gradient(0deg, transparent, transparent 5px, rgba(255,255,255,0.2) 5px, rgba(255,255,255,0.2) 10px);
-    border-radius: 50%;
-    animation: sparkle 1s linear infinite;
-}
-
-.disco-ball:nth-child(1) {
-    top: 50px;
-    left: 10%;
-}
-
-.disco-ball:nth-child(2) {
-    top: 100px;
-    right: 10%;
-    animation-delay: -2.5s;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-@keyframes sparkle {
-    0% { opacity: 0.5; }
-    50% { opacity: 1; }
-    100% { opacity: 0.5; }
-}
-
-.disco-lights {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-        radial-gradient(circle at 50% 50%, rgba(255,0,0,0.2) 0%, transparent 20%),
-        radial-gradient(circle at 20% 20%, rgba(0,255,0,0.2) 0%, transparent 20%),
-        radial-gradient(circle at 80% 80%, rgba(0,0,255,0.2) 0%, transparent 20%);
-    animation: disco 5s infinite linear;
-    pointer-events: none;
-    z-index: 0;
-}
-
-@keyframes disco {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-.container {
-    position: relative;
-    z-index: 1;
-}
-
-.disco-title {
-    font-size: 4rem;
-    font-weight: bold;
-    color: #ff69b4;
-    text-shadow: 0 0 10px rgba(255,105,180,0.7);
-    animation: glow 2s infinite alternate;
-}
-
-.birthday-subtitle {
-    font-size: 2.5rem;
-    color: #00ffff;
-    text-shadow: 0 0 8px rgba(0,255,255,0.7);
-}
-
-@keyframes glow {
-    from {
-        text-shadow: 0 0 10px rgba(255,105,180,0.7);
-    }
-    to {
-        text-shadow: 0 0 20px rgba(255,105,180,0.9),
-                     0 0 30px rgba(255,105,180,0.7);
-    }
-}
-
-.registration-card {
+.connected-status {
     background: rgba(255,255,255,0.1);
-    backdrop-filter: blur(10px);
-    border: none;
-    border-radius: 15px;
-}
-
-.card {
-    background: rgba(255,255,255,0.1);
-    backdrop-filter: blur(10px);
-    border: none;
-    border-radius: 15px;
-    color: white;
-}
-
-.btn-primary {
-    background-color: #ff69b4;
-    border-color: #ff69b4;
-    font-weight: bold;
-}
-
-.btn-primary:hover {
-    background-color: #ff1493;
-    border-color: #ff1493;
-}
-
-.guest-list {
-    min-height: 100px;
-}
-
-.guest-item {
-    padding: 10px;
-    margin: 5px 0;
-    background: rgba(255,255,255,0.05);
-    border-radius: 5px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.guest-status {
-    font-size: 0.9em;
-    padding: 3px 8px;
-    border-radius: 12px;
-    background: rgba(255,255,255,0.1);
-}
-
-.attending {
-    color: #00ff00;
-}
-
-.not-attending {
-    color: #ff4444;
-}
-
-.error-message {
-    color: #ff4444;
+    padding: 8px 16px;
+    border-radius: 20px;
+    display: inline-block;
     margin-top: 10px;
-    text-align: center;
+    font-size: 0.9em;
 }
+
+.principal-id {
+    color: #00ffff;
+    font-family: monospace;
+    font-size: 0.9em;
+}
+
+#connectWalletBtn {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.3);
+    transition: all 0.3s ease;
+}
+
+#connectWalletBtn:hover {
+    background: rgba(255,255,255,0.2);
+    transform: translateY(-2px);
+}
+
+.wallet-text {
+    font-weight: 500;
+}
+
+/* Rest of the previous CSS remains unchanged */

@@ -7,8 +7,10 @@ type Guest =
  record {
    attending: bool;
    name: text;
+   "principal": principal;
  };
 service : {
   addGuest: (text, bool) -> (Result);
   getGuests: () -> (vec Guest) query;
+  isAuthenticated: (principal) -> (bool) query;
 }
